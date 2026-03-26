@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Widevine VMP Lab</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 20px;
+      font-size: 14px;
+      color: #222;
+      background: #fafafa;
+    }
+    fieldset {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px;
+    }
+    legend {
+      font-size: 13px;
+      color: #555;
+      padding: 0 6px;
+    }
+    select, button {
+      font-family: inherit;
+      font-size: 14px;
+    }
+    button {
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #f0f0f0;
+    }
+    .controls {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .player-box {
+      margin-top: 15px;
+      padding: 10px;
+    }
+    #video {
+      width: 100%;
+      max-width: 640px;
+      display: block;
+    }
+    .log-box {
+      margin-top: 15px;
+      padding: 10px;
+    }
+    #logBox {
+      margin: 0;
+      max-height: 250px;
+      overflow-y: auto;
+      background: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <fieldset>
+      <legend>Content List</legend>
+      <select id="contentSelect">
+        <option value="https://storage.googleapis.com/wvmedia/cenc/h264/tears/tears.mpd">
+          Tears of Steel / H264
+        </option>
+        <option value="https://storage.googleapis.com/wvmedia/cenc/vp9/tears/tears.mpd">
+          Tears of Steel / VP9
+        </option>
+        <option value="https://storage.googleapis.com/wvmedia/cenc/hevc/tears/tears.mpd">
+          Tears of Steel / HEVC
+        </option>
+      </select>
+    </fieldset>
+    <fieldset>
+      <legend>Backends</legend>
+      <select id="backendSelect">
+        <option value="https://proxy.uat.widevine.com/proxy">
+          UAT
+        </option>
+        <option value="https://proxy.widevine.com/proxy">
+          Production
+        </option>
+      </select>
+    </fieldset>
+  </div>
+
+  <button id="loadContentBtn">Load Content</button>
+
+  <fieldset class="player-box">
+    <legend>Player</legend>
+    <video id="video" controls></video>
+  </fieldset>
+
+  <fieldset class="log-box">
+    <legend>Log Output</legend>
+    <pre id="logBox"></pre>
+  </fieldset>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.16.3/shaka-player.compiled.min.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
