@@ -137,10 +137,11 @@ function logError(e) {
     e.message = `Shaka Error ${category}.${code}`
   }
   console.error("Error:", e)
-  e.stack = undefined;
-  logBox.textContent += "Error: " + e + "\n";
+  let log_e = Object.assign(Object.create(e), e)
+  log_e.stack = undefined;
+  log_e.data = undefined;
+  logBox.textContent += "Error: " + log_e + "\n";
 }
-
 
 // =========================
 // Player and content logic
@@ -164,6 +165,10 @@ document.getElementById('loadContentBtn').onclick = async () => {
       player = null
     }
     player = new shaka.Player();
+
+    player.addEventListener('error', (e) => {
+      logError(e.detail)
+    });
 
     const net = player.getNetworkingEngine();
     net.registerRequestFilter((type, request) => {
@@ -196,7 +201,8 @@ document.getElementById('loadContentBtn').onclick = async () => {
             videoRobustness: ["SW_SECURE_DECODE"],
             audioRobustness: ["SW_SECURE_CRYPTO"]
           }
-        }
+        },
+        retryParameters: { maxAttempts: 1 }
       }
     });
 
