@@ -415,8 +415,18 @@ document.getElementById('loadContentBtn').onclick = async () => {
     });
 
     const net = player.getNetworkingEngine();
+    let uaChecked = false;
     net.registerRequestFilter((type, request) => {
       if (type === shaka.net.NetworkingEngine.RequestType.LICENSE) {
+        if (!uaChecked) {
+          uaChecked = true;
+          const requestUA = request.headers['User-Agent'] || request.headers['user-agent'];
+          if (requestUA && requestUA !== navigator.userAgent) {
+            log("!! Request UA differs from navigator UA:");
+            log("!!   Request:   ", requestUA);
+            log("!!   Navigator: ", navigator.userAgent);
+          }
+        }
         const message_type = extractInt(request.body, [1]);
         const message_type_str = enumToString(MessageType, message_type);
         if (message_type === 1) {
