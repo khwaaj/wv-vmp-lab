@@ -245,11 +245,15 @@ async function checkStatus() {
   if (typeof window.chrome !== 'undefined') {
     document.getElementById('chrome-links').style.display = '';
   }
+  // Show Firefox links when running in Firefox
+  if (browser?.primary?.startsWith('Firefox')) {
+    document.getElementById('firefox-links').style.display = '';
+  }
 }
 
 checkStatus();
 
-document.querySelectorAll('.chrome-link').forEach(el => {
+document.querySelectorAll('.browser-links').forEach(el => {
   el.addEventListener('click', async () => {
     const url = el.dataset.url;
     const feedback = el.querySelector('.copy-feedback');

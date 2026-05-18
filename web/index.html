@@ -158,7 +158,7 @@
       word-break: break-all;
       margin-top: 6px;
     }
-    .stat-links .chrome-link {
+    .stat-links .browser-links {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -167,7 +167,7 @@
       cursor: pointer;
       padding: 2px 0;
     }
-    .stat-links .chrome-link:hover {
+    .stat-links .browser-links:hover {
       text-decoration: underline;
     }
     .copy-feedback {
@@ -328,8 +328,13 @@
 
       <div class="stat-section stat-links" id="chrome-links" style="display:none">
         <div class="stat-section-header">Chrome</div>
-        <span class="chrome-link" title="Click to copy to clipboard" data-url="chrome://components/">chrome://components/<span class="copy-feedback"></span></span>
-        <span class="chrome-link" title="Click to copy to clipboard" data-url="chrome://media-internals/">chrome://media-internals/<span class="copy-feedback"></span></span>
+        <span class="browser-links" title="Click to copy to clipboard" data-url="chrome://components/">chrome://components/<span class="copy-feedback"></span></span>
+        <span class="browser-links" title="Click to copy to clipboard" data-url="chrome://media-internals/">chrome://media-internals/<span class="copy-feedback"></span></span>
+      </div>
+
+      <div class="stat-section stat-links" id="firefox-links" style="display:none">
+        <div class="stat-section-header">Firefox</div>
+        <span class="browser-links" title="Click to copy to clipboard" data-url="about:support#media">about:support#media<span class="copy-feedback"></span></span>
       </div>
 
     </fieldset>
