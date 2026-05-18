@@ -262,6 +262,19 @@ document.querySelectorAll('.browser-links').forEach(el => {
   el.addEventListener('click', async () => {
     const url = el.dataset.url;
     const feedback = el.querySelector('.copy-feedback');
+
+    // If running in a host that exposes openInternal (e.g. the ECS testing scripts), use it to open
+    // privileged URLs like chrome:// that cannot be navigated to from web content.
+    if (typeof window.openInternal === 'function') {
+      const winId = await window.openInternal(url).catch(() => null);
+      if (winId) {
+        feedback.textContent = '✓ Opened!';
+        setTimeout(() => { feedback.textContent = ''; }, 1500);
+        return;
+      }
+      // fall through to copy on failure
+    }
+
     try {
       await navigator.clipboard.writeText(url);
       feedback.textContent = '✓ Copied!';
