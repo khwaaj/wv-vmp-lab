@@ -123,7 +123,12 @@ function setStatus(id, type, text) {
 async function checkKeySystem(config) {
   if (!navigator.requestMediaKeySystemAccess) return false;
   try {
-    await navigator.requestMediaKeySystemAccess('com.widevine.alpha', config);
+    const augmented = config.map(c => ({
+      ...c,
+      videoCapabilities: c.videoCapabilities?.map(cap => ({ robustness: 'SW_SECURE_CRYPTO', ...cap })),
+      audioCapabilities: c.audioCapabilities?.map(cap => ({ robustness: 'SW_SECURE_CRYPTO', ...cap })),
+    }));
+    await navigator.requestMediaKeySystemAccess('com.widevine.alpha', augmented);
     return true;
   } catch {
     return false;
@@ -460,8 +465,8 @@ document.getElementById('loadContentBtn').onclick = async () => {
         },
         advanced: {
           "com.widevine.alpha": {
-            videoRobustness: ["SW_SECURE_DECODE"],
-            audioRobustness: ["SW_SECURE_CRYPTO"],
+            videoRobustness: "SW_SECURE_DECODE",
+            audioRobustness: "SW_SECURE_CRYPTO",
           },
         },
         retryParameters: { maxAttempts: 1 },
